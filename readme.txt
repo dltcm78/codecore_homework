@@ -2,6 +2,12 @@ General Information About Team Picker!
 Forgot To add inline comment while adding things up
 
 <***Team Picker***>
+Before Start
+createdb week4
+knex migrate:latest
+knex seed:run
+localhost:4545/
+
 [Method]
 per Team = How Many People Will be in One Team
 team Count = How Many Teams Will be
