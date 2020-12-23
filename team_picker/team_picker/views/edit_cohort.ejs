@@ -1,0 +1,18 @@
+<%- include("./partials/header") %>
+<div class="container">
+    <h1>Edit Post</h1>
+    <form method="POST" action="/cohorts/<%= cohort.id %>">
+        <input type="hidden" name="_method" value="PATCH" />
+        <div class="form-group">
+            <input type="url" name="logo" class="form-control" placeholder="e.g. http://imgur.com/myPic.jpg"
+                value="<%= cohort.logo %>" />
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" name="members" placeholder="Members">
+<%= cohort.members %></textarea>
+        </div>
+        <input type="submit" class="btn btn-outline-primary float-right" value="Submit" />
+        <input name="password" type="hidden" value="" />
+    </form>
+</div>
+<%- include("./partials/footer") %>

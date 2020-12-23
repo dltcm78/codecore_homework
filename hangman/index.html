@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./assets/stylesheets/main.css">
+  <title>HangmanWorld</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-center">Hangman World</h1>
+    <div class="content">
+      <div class="hangmanPic">
+        <img id="hangmanPic" src="./assets/images/0.jpg" alt="">
+      </div>
+      <div class="word">
+        <div class="status_count">Wrong Guesses : <span id="wrongGuess">0</span> of 6</div>
+        <p class="givenWord"></p>
+        <p id="wordSpotlight">The word to be guessed goes here</p>
+        <div id="keyboard">
+        </div>
+        <div class="function_buttons">
+          <button class="function reset">Backspace<br><small class="small">reset</small></button>
+          <button class="function tab">Tab<br><small class="small">enable keyboard</small></button>
+          <button class="function space">Space<br><small class="small">change keyboard
+              theme</small></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/js/animalList.js"></script>
+  <script src="./assets/js/main.js"></script>
+  </script>
+</body>
+
+</html>
