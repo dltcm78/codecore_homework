@@ -1,0 +1,115 @@
+<%- include("./partials/header") %>
+<div class="container">
+  <div class="card mb-3">
+    <div class="card-body">
+      <h1 class="card-title w-25"><%= cohort.name %></h1>
+      <form action="/cohorts/<%= cohort.id %>" method="POST">
+        <input type="hidden" name="_method" value="DELETE" />
+        <input type="submit" name="submit" value="Delete" class="btn btn-md btn-danger float-right" />
+      </form>
+      <a href="/cohorts/<%= cohort.id %>/edit"><input type="submit" value="Edit"
+          class="btn btn-md btn-warning mr-2 float-right" /></a>
+
+      <p class="card-text" id="members"><%= cohort.members %></p>
+
+      <hr />
+      <form>
+        <h6>Method</h6>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="method" id="teamCount" value="teamCount" />
+
+          <label class="form-check-label" for="teamCount">
+            Team Count
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="method" id="perTeam" value="perTeam" />
+          <label class="form-check-label" for="perTeam">
+            Number Per Team
+          </label>
+        </div>
+        <div>&nbsp;</div>
+        <div class="form-group">
+          <h5 for="quantity">Quantity</h5>
+          <input type="text" class="form-control" name="quantity" id="quantity" />
+        </div>
+        <input type="submit" value="Assign Teams" class="btn btn-outline-primary btn-lg btn-block" />
+      </form>
+    </div>
+  </div>
+
+  <%if(cohort.members) {%>
+  <% const memberArr = cohort.members.split(','); %>
+  <% const shuffled = helper.shuffle(memberArr); %>
+  <% const numberOfTeams = helper.teamCount(shuffled, quantity); %>
+  <% const membersPerTeam = helper.perTeam(shuffled, quantity); %>
+
+  <% if(method === undefined && quantity === undefined) {%>
+  <h1></h1>
+  <% } %>
+
+  <% if(method === undefined && quantity !== undefined) {%>
+  <h1>Method is Not Given</h1>
+  <% } %>
+
+  <% if(quantity === "" && method !== undefined) {%>
+  <h1>Quantity is Not Given</h1>
+  <% } %>
+
+  <% if(quantity !== "" && method !== undefined){ %>
+  <% if(quantity <= 0 || quantity > memberArr.length) {%>
+  <h1>Number Must Be Greater than 0 and Lower than <%= memberArr.length+1%></h1>
+  <% } %>
+  <%if(parseInt(quantity) !== quantity) {%>
+  <h1>Only Integer is Valid for the Quantity</h1>
+  <% } %>
+  <% } %>
+
+  <% if (method === "teamCount" && quantity > 0 && quantity < memberArr.length + 1){ %> <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Members</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let teamIndex = 1; teamIndex <= quantity; teamIndex++) { %>
+      <tr>
+        <td><%= teamIndex %></td>
+        <% if (teamIndex === quantity) { %>
+        <td><%= shuffled.join(','); %></td>
+        <% } else { %>
+        <td><%= shuffled.splice(0, numberOfTeams).join(','); %></td>
+        <% } %>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <% } %>
+
+  <% if (method === "perTeam" && quantity > 0 && quantity < memberArr.length + 1) { %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Members</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let teamIndex = 1; teamIndex <= membersPerTeam; teamIndex++) { %>
+      <tr>
+        <td><%= teamIndex %></td>
+        <% if (teamIndex === membersPerTeam) { %>
+        <td><%= shuffled.join(','); %></td>
+        <% } else { %>
+        <td><%= shuffled.splice(0, quantity).join(','); %></td>
+        <% } %>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <% } %>
+  <% } %>
+
+</div>
+<%- include("./partials/footer") %>
